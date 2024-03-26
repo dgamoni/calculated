@@ -1,36 +1,18 @@
 <?php
-//add_shortcode( 'calculated', array( 'wpb_widget', 'widget' ) );
+add_shortcode( 'calculated', widget_calc );
 
-// Creating the widget 
-class wpb_widget extends WP_Widget {
 
-function __construct() {
-parent::__construct(
-// Base ID of your widget
-'wpb_widget', 
 
-// Widget name will appear in UI
-__('Calculated Widget', 'wpb_widget_domain'), 
 
-// Widget description
-array( 'description' => __( 'Calculated', 'wpb_widget_domain' ), ) 
-);
-}
+ function widget_calc( $args, $instance ) {
 
-// Creating widget front-end
-// This is where the action happens
-public function widget( $args, $instance ) {
-$title = apply_filters( 'widget_title', $instance['title'] );
 
 extract(shortcode_atts(array(
-      'stitle' => 'shortcode title',
+      'stitle' => 'shortcode',
    ), $args));
 
-if ($title != null) { $stitle = $title;} 
- 
-
 $_SESSION['subtotal'] = $subtotal;
-echo '
+$output ='
 <form name="qwe" method="get" action="'. plugins_url( 'result1.php' , __FILE__ ) .'">
 <table id="calc-mono-table" class="tg" style="undefined;table-layout: fixed;">
 <colgroup>
@@ -38,7 +20,7 @@ echo '
 <col style="width: 50%">
 </colgroup>
   <tr>
-    <th class="tg-031e" colspan="2"><h2>'. $stitle . '</h2></th>
+    <th class="tg-031e" colspan="2"><h2>'. $stitle. '</h2></th>
   </tr>
   <tr>
     <td class="tg-ugh9"><h3>Разрешение камер</h3></td>
@@ -51,7 +33,7 @@ echo '
 				    <option value="1">высокое</option>
 				</select>
 	</td>
-    <td class="tg-s6z2">
+    <td class="textleft tg-s6z2">
     			<select name="nds" id="nds">
 				    <option value="0">физ.лицо</option>
 				    <option value="1">организация</option>
@@ -263,42 +245,8 @@ echo '
 </div>';
 
 
-echo $args['after_widget'];
-
+return $output;
 }
 		
-// Widget Backend 
-public function form( $instance ) {
 
-
-
-
-
-if ( isset( $instance[ 'title' ] ) ) {
-$title = $instance[ 'title' ];
-}
-else {
-$title = __( 'New title', 'wpb_widget_domain' );
-}
-// Widget admin form
-?>
-<p>
-<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:' ); ?></label> 
-<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
-</p>
-<?php 
-}
 	
-// Updating widget replacing old instances with new
-public function update( $new_instance, $old_instance ) {
-$instance = array();
-$instance['title'] = ( ! empty( $new_instance['title'] ) ) ? strip_tags( $new_instance['title'] ) : '';
-return $instance;
-}
-} // Class wpb_widget ends here
-
-// Register and load the widget
-function wpb_load_widget() {
-	register_widget( 'wpb_widget' );
-}
-add_action( 'widgets_init', 'wpb_load_widget' );

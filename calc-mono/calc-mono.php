@@ -2,8 +2,8 @@
 /*
 Plugin Name: Calculated 
 Plugin URI: http://monothemes.com
-Description: 
-Version: 1.0.1
+Description: widget+shotrcode [calculated stitle="калькулятор"]
+Version: 1.0.2
 Author: Andrey Monin
 Author URI: http://monothemes.com
 License: GPL
@@ -12,13 +12,17 @@ License: GPL
 
 require_once 'ACF/init.php';
 require_once 'widgets/uniwidget_menu.php';
+require_once 'widgets/uni_shortcode.php';
 //require_once 'export.php';
+
 
 function my_scripts() {
 	wp_enqueue_script( 'jquery' );
 	wp_register_style( 'prefix-style', plugins_url('css/custom.css', __FILE__) );
+	wp_register_style( 'table-style', plugins_url('table.css', __FILE__) );
 	wp_register_style( 'magnific-popup', plugins_url('js/magnific-popup.css', __FILE__) );
 	wp_enqueue_style( 'prefix-style' );
+	wp_enqueue_style( 'table-style' );
 	wp_enqueue_style( 'magnific-popup' );
 	wp_enqueue_script('newscript',plugins_url( 'js/jquery.magnific-popup.min.js' , __FILE__ ),array( 'jquery' ));
 	//wp_enqueue_script('arithmetics',plugins_url( 'js/jquery.basic_arithmetics.min.js' , __FILE__ ),array( 'jquery' ));
